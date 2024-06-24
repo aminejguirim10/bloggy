@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Blog Website
 
-## Getting Started
+A complete blog website with user authentication, article management, and a comment system, built using Next.js, Tailwind CSS, TypeScript, Prisma, MongoDB, and NextAuth.
 
-First, run the development server:
+## Features
+
+- User authentication (Sign Up, Login, Logout)
+- CRUD operations for blog posts
+- Rich text editor for creating posts
+- Categories and tags for organizing posts
+- Comment system for reader interaction
+- Admin dashboard with charts for data management and analysis
+- Responsive design for an optimal user experience across all devices
+
+## Technologies Used
+
+- **Frontend:** Next.js, Tailwind CSS, TypeScript
+- **Backend:** Next.js API Routes
+- **Database:** MongoDB with Prisma
+- **Authentication:** NextAuth
+
+## Installation
+
+1. Clone the repository:
+
+```bash
+ git clone https://github.com/yourusername/your-repo.git
+```
+
+2. Navigate to the project directory:
+
+```bash
+ cd your-repo
+```
+
+3. Install the dependencies:
+
+```bash
+npm install
+```
+
+4. Configure environment variables:
+
+```bash
+DATABASE_URL="your_mongodb_url"
+NEXTAUTH_SECRET="your_nextauth_secret"
+NEXTAUTH_URL="your_nextauth_url"
+
+GOOGLE_CLIENT_SECRET="your_google_client_secret"
+GOOGLE_CLIENT_ID="your_google_client_id"
+GITHUB_SECRET="your_github_secret"
+GITHUB_ID="your_github_id"
+
+UPLOADTHING_SECRET="your_uploadthing_secret"
+UPLOADTHING_APP_ID="your_uploadthing_app_id"
+
+NODE_MAILER_SECRET="your_node_mailer_secret"
+NODE_MAILER_AUTHOR_MAIL="your_node_mailer_author_mail"
+
+JWT_SECRET="your_jwt_secret"
+```
+
+5. Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+6. Open your browser and visit:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Image Storage with UploadThing
 
-## Learn More
+This project uses UploadThing for image storage. Make sure you have configured the appropriate environment variables for UploadThing.
 
-To learn more about Next.js, take a look at the following resources:
+## Admin Dashboard
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The admin dashboard provides an intuitive interface with several charts for data management and analysis. Here are some screenshots:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **Dashboard**
+  ![](https://bloggy-amine.vercel.app/adminDashboard.png)
 
-## Deploy on Vercel
+- **Blogs Per Day**
+  ![](https://bloggy-amine.vercel.app/chartsPerDay.png)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Blogs Per Week**
+  ![](https://bloggy-amine.vercel.app/chartsPerWeek.png)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **Blogs Per Month**
+  ![](https://bloggy-amine.vercel.app/chartsPerMonth.png)
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request.

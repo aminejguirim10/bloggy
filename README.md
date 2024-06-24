@@ -24,13 +24,13 @@ A complete blog website with user authentication, article management, and a comm
 1. Clone the repository:
 
 ```bash
- git clone https://github.com/yourusername/your-repo.git
+ git clone https://github.com/aminejguirim10/bloggy.git
 ```
 
 2. Navigate to the project directory:
 
 ```bash
- cd your-repo
+ cd bloggy
 ```
 
 3. Install the dependencies:

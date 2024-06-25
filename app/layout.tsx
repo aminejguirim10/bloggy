@@ -5,6 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import NextAuthProvider from "@/components/providers/NextAuthProvider";
 import { Toaster } from "@/components/ui/toaster";
+import VercelAnalytics from "@/components/providers/VercelAnalytics";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -45,6 +46,7 @@ export default function RootLayout({
             <Footer />
           </div>
           <Toaster />
+          <VercelAnalytics />
         </NextAuthProvider>
       </body>
     </html>

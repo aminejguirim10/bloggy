@@ -1,22 +1,22 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { FaRegCopy } from "react-icons/fa";
-import { TiTick } from "react-icons/ti";
+import { useState } from "react"
+import { FaRegCopy } from "react-icons/fa"
+import { TiTick } from "react-icons/ti"
 
 const CopyTextBtn = ({ content }: { content: string }) => {
-  const [copied, setCopied] = useState(false);
-  const [text, setText] = useState("");
+  const [copied, setCopied] = useState(false)
+  const [text, setText] = useState("")
   const copyText = () => {
-    setText(content);
-    navigator.clipboard.writeText(content);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+    setText(content)
+    navigator.clipboard.writeText(content)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
   return (
     <div
       onClick={copyText}
-      className="border px-1 py-1 rounded-md border-gray-500 hover:border-gray-300 hover:bg-zinc-200"
+      className="rounded-md border border-gray-500 px-1 py-1 hover:border-gray-300 hover:bg-zinc-200"
     >
       {copied ? (
         <TiTick className="text-green-700 hover:cursor-pointer" />
@@ -24,7 +24,7 @@ const CopyTextBtn = ({ content }: { content: string }) => {
         <FaRegCopy className="text-green-900 hover:cursor-pointer" />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default CopyTextBtn;
+export default CopyTextBtn

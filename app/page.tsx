@@ -1,61 +1,61 @@
-import PaginationControls from "@/components/buttons/PaginationControls";
-import CardSkeleton from "@/components/layout/CardSkeleton";
-import PostCard from "@/components/layout/PostCard";
-import { Suspense } from "react";
+import PaginationControls from "@/components/buttons/PaginationControls"
+import CardSkeleton from "@/components/layout/CardSkeleton"
+import PostCard from "@/components/layout/PostCard"
+import { Suspense } from "react"
 
 export type BlogT = {
-  id: string;
-  title: string;
-  content: string;
-  image: string;
-  authorId: string;
-  createdAt: string;
-  updatedAt: string;
-};
+  id: string
+  title: string
+  content: string
+  image: string
+  authorId: string
+  createdAt: string
+  updatedAt: string
+}
 
 const getBlogs = async () => {
   try {
     const res = await fetch(`${process.env.NEXTAUTH_URL}/api/blog`, {
       cache: "no-store",
-    });
+    })
     if (res.ok) {
-      const data = await res.json();
+      const data = await res.json()
 
-      return data;
+      return data
     }
-    return null;
+    return null
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
 export default async function Home({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: { [key: string]: string | string[] | undefined }
 }) {
-  const page = searchParams["page"] ?? "1";
-  const per_page = searchParams["per_page"] ?? "6";
+  const page = searchParams["page"] ?? "1"
+  const per_page = searchParams["per_page"] ?? "6"
 
-  const start = (Number(page) - 1) * Number(per_page);
-  const end = start + Number(per_page);
+  const start = (Number(page) - 1) * Number(per_page)
+  const end = start + Number(per_page)
 
-  const blogs: BlogT[] = await getBlogs();
-  const entries = blogs.slice(start, end);
+  const blogs: BlogT[] = await getBlogs()
+  const entries = blogs.slice(start, end)
 
   return (
-    <div className="max-w-7xl mx-auto py-4 px-6 flex flex-col gap-4  ">
+    <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-4">
       <div className="flex flex-col items-center justify-center gap-2 text-center">
-        <h1 className="text-4xl font-bold mt-6 leading-[45px]">
+        <h1 className="mt-6 text-4xl font-bold leading-[45px]">
           Welcome to{" "}
-          <span className="bg-gradient-to-r from-blue-800 to-indigo-900 inline-block text-transparent bg-clip-text">
+          <span className="inline-block bg-gradient-to-r from-blue-800 to-indigo-900 bg-clip-text text-transparent">
             Bloggy
           </span>
         </h1>
         <p className="text-lg">The best place to share your knowledge</p>
       </div>
-      <div className=" flex flex-col justify-center items-center gap-10 mt-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-16">
+      <div className="mt-10 flex flex-col items-center justify-center gap-10">
+        <div className="grid grid-cols-1 gap-16 md:grid-cols-2 lg:grid-cols-3">
           {blogs && blogs?.length > 0 ? (
             entries.map((blog) => (
               <Suspense fallback={<CardSkeleton />} key={blog.id}>
@@ -69,7 +69,7 @@ export default async function Home({
               </Suspense>
             ))
           ) : (
-            <div className="text-2xl md:text-4xl font-bold ">
+            <div className="text-2xl font-bold md:text-4xl">
               No Blogs available
             </div>
           )}
@@ -83,5 +83,5 @@ export default async function Home({
         )}
       </div>
     </div>
-  );
+  )
 }

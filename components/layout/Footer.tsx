@@ -1,12 +1,12 @@
-import React from "react";
+import React from "react"
 
 const Footer = () => {
-  const cuurentYear = new Date().getFullYear();
+  const cuurentYear = new Date().getFullYear()
   return (
-    <div className="max-w-7xl mx-auto py-4 px-6 border-t w-full flex justify-center items-center font-bold mt-6">
+    <div className="mx-auto mt-6 flex w-full max-w-7xl items-center justify-center border-t px-6 py-4 font-bold">
       Made By Amine Jguirim {cuurentYear}
     </div>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

@@ -1,16 +1,16 @@
-import { NextResponse } from "next/server";
-import prisma from "@/lib/db";
+import { NextResponse } from "next/server"
+import prisma from "@/lib/db"
 export async function POST(
   req: Request,
   { params: { id } }: { params: { id: string } }
 ) {
   try {
-    const { title, content, image } = await req.json();
+    const { title, content, image } = await req.json()
     const user = await prisma?.user.findUnique({
       where: { email: id },
-    });
+    })
     if (!user) {
-      return NextResponse.json({ error: "user not found" }, { status: 404 });
+      return NextResponse.json({ error: "user not found" }, { status: 404 })
     }
     const blog = await prisma.blog.create({
       data: {
@@ -23,14 +23,11 @@ export async function POST(
           },
         },
       },
-    });
-    return NextResponse.json({ message: "Blog created", blog });
+    })
+    return NextResponse.json({ message: "Blog created", blog })
   } catch (error) {
-    console.log(error);
-    return NextResponse.json(
-      { error: "Something went wrong" },
-      { status: 500 }
-    );
+    console.log(error)
+    return NextResponse.json({ error: "Something went wrong" }, { status: 500 })
   }
 }
 
@@ -43,14 +40,11 @@ export async function DELETE(
       where: {
         id: id,
       },
-    });
-    return NextResponse.json({ message: "Blog deleted", Blog });
+    })
+    return NextResponse.json({ message: "Blog deleted", Blog })
   } catch (error) {
-    console.log(error);
-    return NextResponse.json(
-      { error: "Something went wrong" },
-      { status: 500 }
-    );
+    console.log(error)
+    return NextResponse.json({ error: "Something went wrong" }, { status: 500 })
   }
 }
 
@@ -63,14 +57,11 @@ export async function GET(
       where: {
         id: id,
       },
-    });
-    return NextResponse.json(blog);
+    })
+    return NextResponse.json(blog)
   } catch (error) {
-    console.log(error);
-    return NextResponse.json(
-      { error: "Something went wrong" },
-      { status: 500 }
-    );
+    console.log(error)
+    return NextResponse.json({ error: "Something went wrong" }, { status: 500 })
   }
 }
 
@@ -79,7 +70,7 @@ export async function PUT(
   { params: { id } }: { params: { id: string } }
 ) {
   try {
-    const { title, content, image } = await req.json();
+    const { title, content, image } = await req.json()
     const blog = await prisma.blog.update({
       where: {
         id: id,
@@ -89,13 +80,10 @@ export async function PUT(
         content,
         image,
       },
-    });
-    return NextResponse.json(blog);
+    })
+    return NextResponse.json(blog)
   } catch (error) {
-    console.log(error);
-    return NextResponse.json(
-      { error: "Something went wrong" },
-      { status: 500 }
-    );
+    console.log(error)
+    return NextResponse.json({ error: "Something went wrong" }, { status: 500 })
   }
 }

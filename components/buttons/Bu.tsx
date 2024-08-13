@@ -1,16 +1,16 @@
-import { useFormStatus } from "react-dom";
-import { Button } from "../ui/button";
+import { useFormStatus } from "react-dom"
+import { Button } from "../ui/button"
 
 const Bu = () => {
   // case of working with formData in server action
   // To ensure having the pending state we should have this component seperated from the form
-  const { pending } = useFormStatus();
+  const { pending } = useFormStatus()
   return (
     <Button type="submit" disabled={pending} className="flex gap-3">
       {pending && (
         <svg
           aria-hidden="true"
-          className="inline w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+          className="inline h-6 w-6 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +27,7 @@ const Bu = () => {
       )}
       {pending ? "Loading" : "Submit"}
     </Button>
-  );
-};
+  )
+}
 
-export default Bu;
+export default Bu

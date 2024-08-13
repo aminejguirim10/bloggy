@@ -1,20 +1,20 @@
-import { AuthOptions, DefaultSession } from "next-auth";
-import Credentials from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
-import GitHubProvider from "next-auth/providers/github";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { Adapter } from "next-auth/adapters";
-import prisma from "@/lib/db";
-import bcryptjs from "bcryptjs";
+import { AuthOptions, DefaultSession } from "next-auth"
+import Credentials from "next-auth/providers/credentials"
+import GoogleProvider from "next-auth/providers/google"
+import GitHubProvider from "next-auth/providers/github"
+import { PrismaAdapter } from "@next-auth/prisma-adapter"
+import { Adapter } from "next-auth/adapters"
+import prisma from "@/lib/db"
+import bcryptjs from "bcryptjs"
 
 type ExtendedUser = DefaultSession["user"] & {
-  isAdmin: boolean;
-  id: string;
-};
+  isAdmin: boolean
+  id: string
+}
 
 declare module "next-auth" {
   interface Session {
-    user: ExtendedUser;
+    user: ExtendedUser
   }
 }
 export const authOptions: AuthOptions = {
@@ -45,48 +45,48 @@ export const authOptions: AuthOptions = {
       },
       authorize: async (credentials) => {
         if (!credentials?.email || !credentials?.password) {
-          return null;
+          return null
         }
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
-        });
+        })
         if (!user || !user.password) {
-          return null;
+          return null
         }
 
         const isValid = await bcryptjs.compare(
           credentials.password,
           user?.password!
-        );
+        )
 
         if (!isValid) {
-          return null;
+          return null
         }
-        return user;
+        return user
       },
     }),
   ],
   callbacks: {
     jwt: ({ token, user }) => {
       if (user) {
-        const u = user as unknown as any;
+        const u = user as unknown as any
         return {
           ...token,
           id: u.id,
           isAdmin: u.isAdmin,
-        };
+        }
       }
-      return token;
+      return token
     },
     session: ({ session, token }) => {
       return {
         ...session,
         user: { ...session.user, id: token.id, isAdmin: token.isAdmin },
-      };
+      }
     },
   },
   secret: process.env.NEXTAUTH_SECRET!,
   pages: {
     signIn: "/signin",
   },
-};
+}

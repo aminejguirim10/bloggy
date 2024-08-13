@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { Button } from "@/components/ui/button"
 
 import {
   Form,
@@ -12,27 +12,27 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useState } from "react";
-import { toast } from "../ui/use-toast";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { useState } from "react"
+import { toast } from "../ui/use-toast"
 
 const formSchema = z.object({
   email: z.string().email({ message: "email is not valid" }),
-});
+})
 
 const ForgotPasswordForm = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
     },
-  });
+  })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const handleSubmit = async () => {
-      setLoading(true);
+      setLoading(true)
       try {
         const res = await fetch("/api/forgot-password", {
           method: "POST",
@@ -42,28 +42,28 @@ const ForgotPasswordForm = () => {
           body: JSON.stringify({
             email: values.email,
           }),
-        });
+        })
         if (res.ok) {
-          form.reset();
+          form.reset()
           toast({
             title: "Email sent",
             description: "Check your email for a link to reset your password",
-          });
+          })
         } else {
-          const data = await res.json();
+          const data = await res.json()
           toast({
             title: "Error",
             description: data.message,
             variant: "destructive",
-          });
+          })
         }
       } catch (error) {
-        console.log(error);
+        console.log(error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
-    handleSubmit();
+    }
+    handleSubmit()
   }
   return (
     <Form {...form}>
@@ -82,16 +82,16 @@ const ForgotPasswordForm = () => {
                 />
               </FormControl>
               {form.formState.errors.email && (
-                <FormMessage className="text-xs " />
+                <FormMessage className="text-xs" />
               )}
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={loading} className="flex gap-3 w-full">
+        <Button type="submit" disabled={loading} className="flex w-full gap-3">
           {loading && (
             <svg
               aria-hidden="true"
-              className="inline w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+              className="inline h-6 w-6 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -110,7 +110,7 @@ const ForgotPasswordForm = () => {
         </Button>
       </form>
     </Form>
-  );
-};
+  )
+}
 
-export default ForgotPasswordForm;
+export default ForgotPasswordForm

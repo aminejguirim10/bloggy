@@ -1,8 +1,8 @@
-"use client";
+"use client"
 
-import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ColumnDef } from "@tanstack/react-table"
+import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +10,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,18 +21,18 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+} from "@/components/ui/alert-dialog"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Blog = {
-  id: string;
-  title: string;
-  email: string;
-  createdAt: Date;
-};
+  id: string
+  title: string
+  email: string
+  createdAt: Date
+}
 
 export const columns: ColumnDef<Blog>[] = [
   {
@@ -51,7 +51,7 @@ export const columns: ColumnDef<Blog>[] = [
           Tilte
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      );
+      )
     },
   },
   {
@@ -66,7 +66,7 @@ export const columns: ColumnDef<Blog>[] = [
           Email
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      );
+      )
     },
   },
   {
@@ -81,11 +81,11 @@ export const columns: ColumnDef<Blog>[] = [
           Created At
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      );
+      )
     },
     cell: ({ row }) => {
-      const blog = row.original;
-      return <div>{new Date(blog.createdAt).toLocaleDateString()}</div>;
+      const blog = row.original
+      return <div>{new Date(blog.createdAt).toLocaleDateString()}</div>
     },
   },
 
@@ -93,9 +93,9 @@ export const columns: ColumnDef<Blog>[] = [
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const blog = row.original;
-      const router = useRouter();
-      const [isOpen, setIsOpen] = useState(false);
+      const blog = row.original
+      const router = useRouter()
+      const [isOpen, setIsOpen] = useState(false)
       const handleDelete = async () => {
         try {
           const res = await fetch(`/api/blog/${blog.id}`, {
@@ -103,15 +103,15 @@ export const columns: ColumnDef<Blog>[] = [
             headers: {
               "Content-Type": "application/json",
             },
-          });
+          })
 
           if (res.ok) {
-            router.refresh();
+            router.refresh()
           }
         } catch (error) {
-          console.log(error);
+          console.log(error)
         }
-      };
+      }
 
       return (
         <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
@@ -162,8 +162,8 @@ export const columns: ColumnDef<Blog>[] = [
                       <AlertDialogAction
                         className="bg-red-700 hover:bg-red-500"
                         onClick={() => {
-                          handleDelete();
-                          setIsOpen(false);
+                          handleDelete()
+                          setIsOpen(false)
                         }}
                       >
                         Continue
@@ -175,7 +175,7 @@ export const columns: ColumnDef<Blog>[] = [
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      );
+      )
     },
   },
-];
+]

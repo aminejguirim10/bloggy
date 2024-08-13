@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { Button } from "@/components/ui/button"
 
 import {
   Form,
@@ -12,43 +12,43 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Dispatch, SetStateAction, useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { toast } from "../ui/use-toast";
-import { redirect, useRouter } from "next/navigation";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Dispatch, SetStateAction, useState } from "react"
+import { FaEye, FaEyeSlash } from "react-icons/fa"
+import { toast } from "../ui/use-toast"
+import { redirect, useRouter } from "next/navigation"
 
 const formSchema = z.object({
   password: z
     .string()
     .min(5, { message: "password must be at least 5 characters" }),
-});
+})
 
 const ResetPasswordForm = ({ id, token }: { id: string; token: string }) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       password: "",
     },
-  });
+  })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const handleSubmit = async () => {
-      setLoading(true);
+      setLoading(true)
       try {
         if (values.password !== confirmPassword) {
           toast({
             title: "Password mismatch",
             description: "Password and Confirm password must match",
             variant: "destructive",
-          });
-          setLoading(false);
-          return;
+          })
+          setLoading(false)
+          return
         }
         const res = await fetch(`/api/reset-password/${id}/${token}`, {
           method: "PUT",
@@ -58,22 +58,22 @@ const ResetPasswordForm = ({ id, token }: { id: string; token: string }) => {
           body: JSON.stringify({
             password: values.password,
           }),
-        });
+        })
         if (res.ok) {
-          form.reset();
+          form.reset()
           toast({
             title: "Password updated",
             description: "Your password has been updated",
-          });
-          router.replace("/signin");
+          })
+          router.replace("/signin")
         }
       } catch (error) {
-        console.log(error);
+        console.log(error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
-    handleSubmit();
+    }
+    handleSubmit()
   }
   return (
     <Form {...form}>
@@ -115,11 +115,11 @@ const ResetPasswordForm = ({ id, token }: { id: string; token: string }) => {
           setConfirmPassword={setConfirmPassword}
         />
 
-        <Button type="submit" disabled={loading} className="flex gap-3 w-full">
+        <Button type="submit" disabled={loading} className="flex w-full gap-3">
           {loading && (
             <svg
               aria-hidden="true"
-              className="inline w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+              className="inline h-6 w-6 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -138,19 +138,19 @@ const ResetPasswordForm = ({ id, token }: { id: string; token: string }) => {
         </Button>
       </form>
     </Form>
-  );
-};
+  )
+}
 
-export default ResetPasswordForm;
+export default ResetPasswordForm
 
 const ConfirmPassword = ({
   confirmPassword,
   setConfirmPassword,
 }: {
-  confirmPassword: string;
-  setConfirmPassword: Dispatch<SetStateAction<string>>;
+  confirmPassword: string
+  setConfirmPassword: Dispatch<SetStateAction<string>>
 }) => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false)
   return (
     <div className="flex flex-col gap-3">
       <FormLabel className="font-bold">Confirm Your password</FormLabel>
@@ -174,5 +174,5 @@ const ConfirmPassword = ({
         )}
       </div>
     </div>
-  );
-};
+  )
+}

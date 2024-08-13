@@ -1,10 +1,10 @@
-"use client";
-import React from "react";
+"use client"
+import React from "react"
 
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -13,11 +13,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "../ui/textarea";
-import { set } from "date-fns";
-import { toast } from "../ui/use-toast";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "../ui/textarea"
+import { set } from "date-fns"
+import { toast } from "../ui/use-toast"
 const formSchema = z.object({
   firstName: z
     .string()
@@ -36,10 +36,10 @@ const formSchema = z.object({
     .string()
     .min(5, { message: "Subject must contain at least 5 characters" })
     .max(100, { message: "Subject must contain at most 50 characters" }),
-});
+})
 
 const ContactForm = () => {
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,9 +49,9 @@ const ContactForm = () => {
       message: "",
       subject: "",
     },
-  });
+  })
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsSubmitting(true);
+    setIsSubmitting(true)
     try {
       const res = await fetch("/api/sendEmail", {
         method: "Post",
@@ -63,18 +63,18 @@ const ContactForm = () => {
           message: values.message,
           subject: values.subject,
         }),
-      });
+      })
       if (res.ok) {
         toast({
           title: "Email sent",
           description: "Your email has been sent successfully",
-        });
+        })
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     } finally {
-      setIsSubmitting(false);
-      form.reset();
+      setIsSubmitting(false)
+      form.reset()
     }
   }
 
@@ -82,15 +82,12 @@ const ContactForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="max-w-7xl mx-auto py-4 px-6 flex flex-col gap-4 "
+        className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-4"
       >
-        <div
-          className="my-10 font-bold text-center text-2xl sm:text-3xl  
-        bg-gradient-to-r from-blue-600 to-indigo-700 inline-block text-transparent bg-clip-text"
-        >
+        <div className="my-10 inline-block bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-center text-2xl font-bold text-transparent sm:text-3xl">
           Contact Us
         </div>
-        <div className="flex flex-col sm:flex-row justify-between gap-4 ">
+        <div className="flex flex-col justify-between gap-4 sm:flex-row">
           <FormField
             control={form.control}
             name="firstName"
@@ -169,13 +166,13 @@ const ContactForm = () => {
 
         <Button
           type="submit"
-          className="flex gap-3 w-full my-5"
+          className="my-5 flex w-full gap-3"
           disabled={isSubmitting}
         >
           {isSubmitting && (
             <svg
               aria-hidden="true"
-              className="inline w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+              className="inline h-6 w-6 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -194,7 +191,7 @@ const ContactForm = () => {
         </Button>
       </form>
     </Form>
-  );
-};
+  )
+}
 
-export default ContactForm;
+export default ContactForm

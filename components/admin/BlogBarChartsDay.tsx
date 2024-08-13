@@ -1,12 +1,12 @@
-"use client";
-import { useEffect } from "react";
-import { Chart } from "chart.js";
+"use client"
+import { useEffect } from "react"
+import { Chart } from "chart.js"
 
 function BlogBarChartsDay({ data }: { data: Number[] }) {
   useEffect(() => {
     var ctx = (
       document.getElementById("myChartBar") as HTMLCanvasElement
-    ).getContext("2d");
+    ).getContext("2d")
     if (ctx) {
       var myChart = new Chart(ctx, {
         type: "bar",
@@ -30,24 +30,24 @@ function BlogBarChartsDay({ data }: { data: Number[] }) {
             },
           ],
         },
-      });
+      })
     }
-  }, [data]); //data is the prop passed to the component to render the chart in case of change in data
+  }, [data]) //data is the prop passed to the component to render the chart in case of change in data
 
   return (
     <>
       {/* Bar chart */}
-      <h1 className="mx-auto mt-10 font-bold text-xl md:text-2xl capitalize ">
+      <h1 className="mx-auto mt-10 text-xl font-bold capitalize md:text-2xl">
         Bar chart of Blogs created by day of week
       </h1>
-      <div className="w-[1100px] h-screen flex mx-auto my-auto -mt-[100px]">
-        <div className="border border-gray-400 pt-0 rounded-xl  w-full h-fit my-auto  shadow-xl">
+      <div className="mx-auto my-auto -mt-[100px] flex h-screen w-[1100px]">
+        <div className="my-auto h-fit w-full rounded-xl border border-gray-400 pt-0 shadow-xl">
           {/* Canva id must be unique if you have multiple Charts */}
           <canvas id="myChartBar"></canvas>
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default BlogBarChartsDay;
+export default BlogBarChartsDay

@@ -1,11 +1,11 @@
-import RouteAvailabe from "@/components/layout/RouteAvailabe";
-import { Separator } from "@/components/ui/separator";
-import React from "react";
-import { CgProfile } from "react-icons/cg";
-import { FaHome } from "react-icons/fa";
-import { GiFiles } from "react-icons/gi";
-import { MdCreateNewFolder } from "react-icons/md";
-import { IoMailOutline } from "react-icons/io5";
+import RouteAvailabe from "@/components/layout/RouteAvailabe"
+import { Separator } from "@/components/ui/separator"
+import React from "react"
+import { CgProfile } from "react-icons/cg"
+import { FaHome } from "react-icons/fa"
+import { GiFiles } from "react-icons/gi"
+import { MdCreateNewFolder } from "react-icons/md"
+import { IoMailOutline } from "react-icons/io5"
 const mobileNavLinks = [
   {
     name: "Home",
@@ -37,16 +37,16 @@ const mobileNavLinks = [
     icon: IoMailOutline,
     description: "Contact us",
   },
-];
+]
 const NotFound = () => {
   return (
-    <div className="flex h-full  justify-center items-center">
+    <div className="flex h-full items-center justify-center">
       <div className="flex flex-col gap-12">
         <div className="flex flex-col gap-4 text-center">
-          <div className="font-bold  bg-gradient-to-r from-blue-800 to-indigo-900 inline-block text-transparent bg-clip-text">
+          <div className="inline-block bg-gradient-to-r from-blue-800 to-indigo-900 bg-clip-text font-bold text-transparent">
             404
           </div>
-          <div className="font-bold text-2xl md:text-5xl">
+          <div className="text-2xl font-bold md:text-5xl">
             This page does not exist
           </div>
           <div className="text-gray-500 md:text-lg">
@@ -68,7 +68,7 @@ const NotFound = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default NotFound;
+export default NotFound

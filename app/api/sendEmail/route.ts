@@ -1,14 +1,14 @@
-import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { NextResponse } from "next/server"
+import nodemailer from "nodemailer"
 
 export async function POST(req: Request) {
   try {
-    const { email, message, subject } = await req.json();
+    const { email, message, subject } = await req.json()
     if (!email || !message || !subject) {
       return NextResponse.json(
         { message: "Please fill all the fields" },
         { status: 400 }
-      );
+      )
     }
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -18,9 +18,8 @@ export async function POST(req: Request) {
         user: process.env.NODE_MAILER_AUTHOR_MAIL!,
         pass: process.env.NODE_MAILER_SECRET!,
       },
-    });
+    })
     const mailOptions = {
-      
       from: process.env.NODE_MAILER_AUTHOR_MAIL!,
       to: process.env.NODE_MAILER_AUTHOR_MAIL!,
       subject: subject,
@@ -51,13 +50,13 @@ export async function POST(req: Request) {
         </body>
       
       </html>`,
-    };
+    }
 
-    await transporter.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions)
 
-    return NextResponse.json({ message: "email sent successfully", email });
+    return NextResponse.json({ message: "email sent successfully", email })
   } catch (error) {
-    console.log(error);
-    return NextResponse.json({ message: "Failed to send email" });
+    console.log(error)
+    return NextResponse.json({ message: "Failed to send email" })
   }
 }

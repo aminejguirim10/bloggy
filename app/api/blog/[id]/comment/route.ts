@@ -1,5 +1,5 @@
-import prisma from "@/lib/db";
-import { NextResponse } from "next/server";
+import prisma from "@/lib/db"
+import { NextResponse } from "next/server"
 
 export async function GET(
   req: Request,
@@ -12,13 +12,10 @@ export async function GET(
       include: {
         author: true,
       },
-    });
-    return NextResponse.json(comments);
+    })
+    return NextResponse.json(comments)
   } catch (error) {
-    console.log(error);
-    return NextResponse.json(
-      { error: "Something went wrong" },
-      { status: 500 }
-    );
+    console.log(error)
+    return NextResponse.json({ error: "Something went wrong" }, { status: 500 })
   }
 }

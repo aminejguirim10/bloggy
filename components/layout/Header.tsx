@@ -1,12 +1,12 @@
-import React from "react";
-import Link from "next/link";
-import { getServerSession } from "next-auth";
-import SignInBtn from "../buttons/SignInBtn";
-import SignOutBtn from "../buttons/SignOutBtn";
-import MobileNav from "./MobileNav";
-import { cn } from "@/lib/utils";
-import { badgeVariants } from "../ui/badge";
-import { authOptions } from "@/lib/auth";
+import React from "react"
+import Link from "next/link"
+import { getServerSession } from "next-auth"
+import SignInBtn from "../buttons/SignInBtn"
+import SignOutBtn from "../buttons/SignOutBtn"
+import MobileNav from "./MobileNav"
+import { cn } from "@/lib/utils"
+import { badgeVariants } from "../ui/badge"
+import { authOptions } from "@/lib/auth"
 
 const navLinks = [
   {
@@ -29,24 +29,24 @@ const navLinks = [
     name: "Contact",
     link: "/contact",
   },
-];
+]
 
 interface HeaderProps extends React.HtmlHTMLAttributes<HTMLDivElement> {}
 
 const Header = async ({ className, ...props }: HeaderProps) => {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions)
   return (
     <div
       className={cn(
-        "w-full border-b max-w-7xl mx-auto py-4 px-6 flex gap-2 items-center justify-between mb-6",
+        "mx-auto mb-6 flex w-full max-w-7xl items-center justify-between gap-2 border-b px-6 py-4",
         className
       )}
       {...props}
     >
-      <div className="text-xl font-bold  bg-gradient-to-r from-blue-800 to-indigo-900 inline-block text-transparent bg-clip-text">
+      <div className="inline-block bg-gradient-to-r from-blue-800 to-indigo-900 bg-clip-text text-xl font-bold text-transparent">
         <Link href={"/"}>Bloggy</Link>
       </div>
-      <div className="hidden md:flex gap-6 text-sm font-semibold ">
+      <div className="hidden gap-6 text-sm font-semibold md:flex">
         {navLinks.map((link, i) => (
           <Link href={link.link} key={i}>
             {link.name}
@@ -71,7 +71,7 @@ const Header = async ({ className, ...props }: HeaderProps) => {
         <MobileNav />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

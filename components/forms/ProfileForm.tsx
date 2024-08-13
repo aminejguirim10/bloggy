@@ -1,8 +1,8 @@
-"use client";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+"use client"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -10,10 +10,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "../ui/textarea";
+} from "@/components/ui/form"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "../ui/textarea"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,33 +23,33 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { UploadButton } from "@/lib/uploadthing";
-import { getFallback } from "@/lib/utils";
+} from "@/components/ui/alert-dialog"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { UploadButton } from "@/lib/uploadthing"
+import { getFallback } from "@/lib/utils"
 
 const formSchema = z.object({
   name: z.string().min(5, { message: "name must be at least 5 characters" }),
   description: z.string().max(1000),
-});
+})
 
 const ProfileForm = ({ user }: { user: any }) => {
-  const router = useRouter();
-  const [image, setImage] = useState<string | null>(user.image || "");
-  const [loading, setLoading] = useState(false);
-  const [openError, setOpenError] = useState(false);
+  const router = useRouter()
+  const [image, setImage] = useState<string | null>(user.image || "")
+  const [loading, setLoading] = useState(false)
+  const [openError, setOpenError] = useState(false)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       description: user.description || "",
       name: user.name || "",
     },
-  });
+  })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const handleSubmit = async () => {
-      setLoading(true);
+      setLoading(true)
       const response = await fetch(`/api/user/${user.id}`, {
         method: "PUT",
         headers: {
@@ -60,14 +60,14 @@ const ProfileForm = ({ user }: { user: any }) => {
           name: values.name,
           image,
         }),
-      });
+      })
 
       if (response.ok) {
-        router.push("/");
-        router.refresh();
+        router.push("/")
+        router.refresh()
       }
-    };
-    handleSubmit();
+    }
+    handleSubmit()
   }
   return (
     <>
@@ -75,30 +75,30 @@ const ProfileForm = ({ user }: { user: any }) => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4 max-w-7xl mx-auto py-8 px-6  w-full self-center "
+            className="mx-auto w-full max-w-7xl space-y-4 self-center px-6 py-8"
           >
-            <div className="flex justify-center items-center mb-10">
-              <Avatar className="w-[130px] h-[130px]">
+            <div className="mb-10 flex items-center justify-center">
+              <Avatar className="h-[130px] w-[130px]">
                 <AvatarImage src={image ? image : ""} alt="Avatar" />
                 <AvatarFallback className="text-3xl">
                   {getFallback(user.name)}
                 </AvatarFallback>
               </Avatar>
             </div>
-            <div className="flex sm:items-baseline gap-4 flex-col sm:flex-row items-center">
-              <div className="font-bold text-sm sm:text-base">
+            <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-baseline">
+              <div className="text-sm font-bold sm:text-base">
                 To update your profile picture, click on this button:{" "}
               </div>
-              <div className="flex justify-center items-center">
+              <div className="flex items-center justify-center">
                 <UploadButton
                   endpoint="imageUploader"
                   content={{
                     button: ({ ready }) => {
-                      if (ready) return "Update Image";
-                      return "Getting ready...";
+                      if (ready) return "Update Image"
+                      return "Getting ready..."
                     },
                     allowedContent: ({}) => {
-                      return "";
+                      return ""
                     },
                   }}
                   appearance={{
@@ -107,17 +107,17 @@ const ProfileForm = ({ user }: { user: any }) => {
                         ...(ready && { backgroundColor: "#2778e9" }),
                         ...(isUploading && { backgroundColor: "#62b4f8" }),
                         width: "150px",
-                      };
+                      }
                       //backgroundColor: "#64afa6",
                       //color: "black",
                     },
                   }}
                   onClientUploadComplete={(res) => {
                     // Do something with the response
-                    setImage(res[0].url);
+                    setImage(res[0].url)
                   }}
                   onUploadError={(error: Error) => {
-                    setOpenError(true);
+                    setOpenError(true)
                   }}
                 />
               </div>
@@ -140,7 +140,7 @@ const ProfileForm = ({ user }: { user: any }) => {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-bold ">Description</FormLabel>
+                  <FormLabel className="font-bold">Description</FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Type your description here."
@@ -156,12 +156,12 @@ const ProfileForm = ({ user }: { user: any }) => {
             <Button
               type="submit"
               disabled={loading}
-              className="flex gap-3 w-full"
+              className="flex w-full gap-3"
             >
               {loading && (
                 <svg
                   aria-hidden="true"
-                  className="inline w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                  className="inline h-6 w-6 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
                   viewBox="0 0 100 101"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -199,7 +199,7 @@ const ProfileForm = ({ user }: { user: any }) => {
         </AlertDialog>
       )}
     </>
-  );
-};
+  )
+}
 
-export default ProfileForm;
+export default ProfileForm

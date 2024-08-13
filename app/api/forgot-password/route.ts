@@ -1,22 +1,22 @@
-import { NextResponse } from "next/server";
-import prisma from "@/lib/db";
-import jwt from "jsonwebtoken";
-import nodemailer from "nodemailer";
+import { NextResponse } from "next/server"
+import prisma from "@/lib/db"
+import jwt from "jsonwebtoken"
+import nodemailer from "nodemailer"
 export async function POST(req: Request) {
-  const { email } = await req.json();
+  const { email } = await req.json()
   if (!email) {
-    return NextResponse.json({ message: "Email is required" }, { status: 400 });
+    return NextResponse.json({ message: "Email is required" }, { status: 400 })
   }
   try {
-    const oldUser = await prisma.user.findUnique({ where: { email } });
+    const oldUser = await prisma.user.findUnique({ where: { email } })
     if (!oldUser) {
-      return NextResponse.json({ message: "Email not found" }, { status: 404 });
+      return NextResponse.json({ message: "Email not found" }, { status: 404 })
     }
-    const secret = process.env.JWT_SECRET! + oldUser.password;
+    const secret = process.env.JWT_SECRET! + oldUser.password
     const token = jwt.sign({ id: oldUser.id, email: oldUser.email }, secret, {
       expiresIn: "15m",
-    });
-    const link = `${process.env.NEXTAUTH_URL}/reset-password/${oldUser.id}/${token}`;
+    })
+    const link = `${process.env.NEXTAUTH_URL}/reset-password/${oldUser.id}/${token}`
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 465,
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
         user: process.env.NODE_MAILER_AUTHOR_MAIL!,
         pass: process.env.NODE_MAILER_SECRET!,
       },
-    });
+    })
     const mailOptions = {
       from: process.env.NODE_MAILER_AUTHOR_MAIL!,
       to: oldUser.email!,
@@ -57,16 +57,16 @@ export async function POST(req: Request) {
           </body>
         
         </html>`,
-    };
-    await transporter.sendMail(mailOptions);
+    }
+    await transporter.sendMail(mailOptions)
     return NextResponse.json(
       { message: "Email sent successfully" },
       { status: 200 }
-    );
+    )
   } catch (error) {
     return NextResponse.json(
       { message: "Something went wrong" },
       { status: 500 }
-    );
+    )
   }
 }

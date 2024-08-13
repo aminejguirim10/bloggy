@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -11,11 +11,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { FaEye, FaEyeSlash } from "react-icons/fa"
 
 const formSchema = z.object({
   username: z
@@ -25,12 +25,12 @@ const formSchema = z.object({
   password: z
     .string()
     .min(5, { message: "password must be at least 5 characters" }),
-});
+})
 
 const SignUpForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -38,11 +38,11 @@ const SignUpForm = () => {
       email: "",
       password: "",
     },
-  });
+  })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const handleSubmit = async () => {
-      setLoading(true);
+      setLoading(true)
       const response = await fetch("/api/user", {
         method: "POST",
         body: JSON.stringify({
@@ -50,14 +50,14 @@ const SignUpForm = () => {
           password: values.password,
           name: values.username,
         }),
-      });
-      const data = await response.json();
-      console.log(data);
+      })
+      const data = await response.json()
+      console.log(data)
       if (response.ok) {
-        router.push("/signin");
+        router.push("/signin")
       }
-    };
-    handleSubmit();
+    }
+    handleSubmit()
   }
   return (
     <Form {...form}>
@@ -128,11 +128,11 @@ const SignUpForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={loading} className="flex gap-3 w-full">
+        <Button type="submit" disabled={loading} className="flex w-full gap-3">
           {loading && (
             <svg
               aria-hidden="true"
-              className="inline w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+              className="inline h-6 w-6 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -151,7 +151,7 @@ const SignUpForm = () => {
         </Button>
       </form>
     </Form>
-  );
-};
+  )
+}
 
-export default SignUpForm;
+export default SignUpForm

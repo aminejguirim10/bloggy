@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { Button } from "@/components/ui/button"
 
 import {
   Form,
@@ -12,50 +12,50 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { FaEye } from "react-icons/fa";
-import { FaEyeSlash } from "react-icons/fa6";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { signIn } from "next-auth/react"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { FaEye } from "react-icons/fa"
+import { FaEyeSlash } from "react-icons/fa6"
 const formSchema = z.object({
   email: z.string().email({ message: "email is not valid" }),
   password: z
     .string()
     .min(5, { message: "password must be at least 5 characters" }),
-});
+})
 
 const SignInForm = () => {
-  const [error, setError] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const [error, setError] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
       password: "",
     },
-  });
+  })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const handleSubmit = async () => {
-      setLoading(true);
+      setLoading(true)
       const response = await signIn("credentials", {
         email: values.email,
         password: values.password,
         redirect: false,
-      });
+      })
       if (response?.ok) {
-        router.push("/");
-        router.refresh();
+        router.push("/")
+        router.refresh()
       } else {
-        setError(true);
-        setLoading(false);
+        setError(true)
+        setLoading(false)
       }
-    };
-    handleSubmit();
+    }
+    handleSubmit()
   }
   return (
     <Form {...form}>
@@ -74,7 +74,7 @@ const SignInForm = () => {
                 />
               </FormControl>
               {form.formState.errors.email && (
-                <FormMessage className="text-xs " />
+                <FormMessage className="text-xs" />
               )}
             </FormItem>
           )}
@@ -117,11 +117,11 @@ const SignInForm = () => {
           </div>
         )}
 
-        <Button type="submit" disabled={loading} className="flex gap-3 w-full">
+        <Button type="submit" disabled={loading} className="flex w-full gap-3">
           {loading && (
             <svg
               aria-hidden="true"
-              className="inline w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+              className="inline h-6 w-6 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -140,7 +140,7 @@ const SignInForm = () => {
         </Button>
       </form>
     </Form>
-  );
-};
+  )
+}
 
-export default SignInForm;
+export default SignInForm

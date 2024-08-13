@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -12,13 +12,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "../ui/textarea";
-import { UploadDropzone } from "@/lib/uploadthing";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "../ui/textarea"
+import { UploadDropzone } from "@/lib/uploadthing"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { useSession } from "next-auth/react"
 
 import {
   AlertDialog,
@@ -29,20 +29,20 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+} from "@/components/ui/alert-dialog"
 
 const formSchema = z.object({
   title: z.string().min(5).max(100),
   content: z.string().min(20).max(1000),
-});
+})
 
 const CreateBlogForm = () => {
-  const { data: session } = useSession();
-  const router = useRouter();
-  const [image, setImage] = useState<string | null>("");
-  const [loading, setLoading] = useState(false);
-  const [openSuccess, setOpenSuccess] = useState(false);
-  const [openError, setOpenError] = useState(false);
+  const { data: session } = useSession()
+  const router = useRouter()
+  const [image, setImage] = useState<string | null>("")
+  const [loading, setLoading] = useState(false)
+  const [openSuccess, setOpenSuccess] = useState(false)
+  const [openError, setOpenError] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -50,10 +50,10 @@ const CreateBlogForm = () => {
       title: "",
       content: "",
     },
-  });
+  })
   function onSubmit(values: z.infer<typeof formSchema>) {
     const handleSubmit = async () => {
-      setLoading(true);
+      setLoading(true)
       const response = await fetch(`/api/blog/${session?.user.email}`, {
         method: "POST",
         headers: {
@@ -64,28 +64,28 @@ const CreateBlogForm = () => {
           content: values.content,
           image,
         }),
-      });
+      })
       if (response.ok) {
-        router.push("/");
-        router.refresh();
+        router.push("/")
+        router.refresh()
       }
-    };
+    }
 
-    handleSubmit();
+    handleSubmit()
   }
   return (
     <>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8 flex flex-col justify-center  max-w-7xl mx-auto py-4 px-6 h-full"
+          className="mx-auto flex h-full max-w-7xl flex-col justify-center space-y-8 px-6 py-4"
         >
           <FormField
             control={form.control}
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-bold text-xl">Title</FormLabel>
+                <FormLabel className="text-xl font-bold">Title</FormLabel>
                 <FormControl>
                   <Input placeholder="Title" {...field} />
                 </FormControl>
@@ -101,7 +101,7 @@ const CreateBlogForm = () => {
             name="content"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-bold text-xl">Content</FormLabel>
+                <FormLabel className="text-xl font-bold">Content</FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="Type your content here."
@@ -118,15 +118,15 @@ const CreateBlogForm = () => {
           />
 
           <div>
-            <FormLabel className="font-bold text-xl">Image</FormLabel>
+            <FormLabel className="text-xl font-bold">Image</FormLabel>
             <UploadDropzone
               endpoint="imageUploader"
               onClientUploadComplete={(res) => {
-                setImage(res[0].url);
-                setOpenSuccess(true);
+                setImage(res[0].url)
+                setOpenSuccess(true)
               }}
               onUploadError={(error: Error) => {
-                setOpenError(true);
+                setOpenError(true)
               }}
             />
           </div>
@@ -134,7 +134,7 @@ const CreateBlogForm = () => {
             {loading && (
               <svg
                 aria-hidden="true"
-                className="inline w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                className="inline h-6 w-6 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
                 viewBox="0 0 100 101"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -186,7 +186,7 @@ const CreateBlogForm = () => {
         </AlertDialog>
       )}
     </>
-  );
-};
+  )
+}
 
-export default CreateBlogForm;
+export default CreateBlogForm

@@ -1,12 +1,12 @@
-"use client";
-import { useEffect, useState } from "react";
-import { Chart } from "chart.js";
+"use client"
+import { useEffect, useState } from "react"
+import { Chart } from "chart.js"
 
 function BlogLineCharts({ data }: { data: Number[] }) {
-  const [currentWeek, setCurrentWeek] = useState<string[]>([]);
+  const [currentWeek, setCurrentWeek] = useState<string[]>([])
 
   useEffect(() => {
-    const currentDate = new Date();
+    const currentDate = new Date()
     const days = [
       "Sunday",
       "Monday",
@@ -15,27 +15,27 @@ function BlogLineCharts({ data }: { data: Number[] }) {
       "Thursday",
       "Friday",
       "Saturday",
-    ];
-    const currentWeek = [];
+    ]
+    const currentWeek = []
 
     for (let i = 0; i < 7; i++) {
       const day = new Date(
         currentDate.getTime() - (currentDate.getDay() - i) * 24 * 60 * 60 * 1000
-      );
+      )
       currentWeek.push(
         days[day.getDay()] +
           " " +
           day.toLocaleDateString("en-US", { month: "short", day: "numeric" })
-      );
+      )
     }
 
-    setCurrentWeek(currentWeek);
-  }, []);
+    setCurrentWeek(currentWeek)
+  }, [])
 
   useEffect(() => {
     var ctx = (
       document.getElementById("myChartLine") as HTMLCanvasElement
-    ).getContext("2d");
+    ).getContext("2d")
     if (ctx) {
       var myChart = new Chart(ctx, {
         type: "line",
@@ -51,26 +51,26 @@ function BlogLineCharts({ data }: { data: Number[] }) {
             },
           ],
         },
-      });
+      })
     }
-  }, [currentWeek, data]);
+  }, [currentWeek, data])
 
   return (
     <>
       {/* line chart */}
-      <h1 className="mx-auto mt-10 font-bold text-xl md:text-2xl capitalize">
+      <h1 className="mx-auto mt-10 text-xl font-bold capitalize md:text-2xl">
         Line chart of Blogs created by day of current week
       </h1>
-      <div className="w-[1100px]  h-screen flex mx-auto my-auto ">
-        <div className="border border-gray-400 pt-0 rounded-xl  w-full h-fit my-auto  shadow-xl">
+      <div className="mx-auto my-auto flex h-screen w-[1100px]">
+        <div className="my-auto h-fit w-full rounded-xl border border-gray-400 pt-0 shadow-xl">
           <canvas id="myChartLine"></canvas>
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default BlogLineCharts;
+export default BlogLineCharts
 
 /* "use client";
 import { useEffect } from "react";

@@ -5,18 +5,18 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
-import { GiHamburgerMenu } from "react-icons/gi";
-import Link from "next/link";
-import { FaHome } from "react-icons/fa";
-import { MdCreateNewFolder } from "react-icons/md";
-import { GiFiles } from "react-icons/gi";
-import { CgProfile } from "react-icons/cg";
-import { IoMailOutline } from "react-icons/io5";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { GoSignIn } from "react-icons/go";
-import SignOutMobileBtn from "../buttons/SignOutMobileBtn";
+} from "@/components/ui/sheet"
+import { GiHamburgerMenu } from "react-icons/gi"
+import Link from "next/link"
+import { FaHome } from "react-icons/fa"
+import { MdCreateNewFolder } from "react-icons/md"
+import { GiFiles } from "react-icons/gi"
+import { CgProfile } from "react-icons/cg"
+import { IoMailOutline } from "react-icons/io5"
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/auth"
+import { GoSignIn } from "react-icons/go"
+import SignOutMobileBtn from "../buttons/SignOutMobileBtn"
 const mobileNavLinks = [
   {
     name: "Home",
@@ -48,28 +48,28 @@ const mobileNavLinks = [
     icon: <IoMailOutline className="h-[20px] w-[25px] text-orange-500" />,
     color: "orange",
   },
-];
+]
 const MobileNav = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions)
   return (
     <Sheet>
       <SheetTrigger>
-        <GiHamburgerMenu className="h-[20px] w-[25px] " />
+        <GiHamburgerMenu className="h-[20px] w-[25px]" />
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle className=" bg-gradient-to-r from-blue-800 to-indigo-900 inline-block text-transparent bg-clip-text">
+          <SheetTitle className="inline-block bg-gradient-to-r from-blue-800 to-indigo-900 bg-clip-text text-transparent">
             Bloggy
           </SheetTitle>
         </SheetHeader>
-        <div className="flex flex-col gap-4 mt-14">
+        <div className="mt-14 flex flex-col gap-4">
           {mobileNavLinks.map((link, i) => (
             <SheetClose asChild key={i}>
               <Link
                 href={link.link}
-                className="px-2 py-1  hover:cursor-pointer hover:bg-zinc-100  hover:rounded-md"
+                className="px-2 py-1 hover:cursor-pointer hover:rounded-md hover:bg-zinc-100"
               >
-                <div className="flex gap-4 items-center">
+                <div className="flex items-center gap-4">
                   {link.icon}
                   <div className={`text-${link.color}-500`}>{link.name}</div>
                 </div>
@@ -83,10 +83,7 @@ const MobileNav = async () => {
           ) : (
             <SheetClose asChild>
               <Link href={"/signin"}>
-                <div
-                  className="flex gap-4 items-center ml-1 px-2 py-1  hover:cursor-pointer
-             hover:bg-zinc-100  hover:rounded-md"
-                >
+                <div className="ml-1 flex items-center gap-4 px-2 py-1 hover:cursor-pointer hover:rounded-md hover:bg-zinc-100">
                   <GoSignIn />
                   <div className="ml-1">Sign in</div>
                 </div>
@@ -96,7 +93,7 @@ const MobileNav = async () => {
         </div>
       </SheetContent>
     </Sheet>
-  );
-};
+  )
+}
 
-export default MobileNav;
+export default MobileNav

@@ -1,31 +1,31 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
-import Image from "next/image";
-import EditBlogBtn from "../buttons/EditBlogBtn";
-import DeleteBlogBtn from "../buttons/DeleteBlogBtn";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getFallback } from "@/lib/utils";
-import Link from "next/link";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { getServerSession } from "next-auth"
+import Image from "next/image"
+import EditBlogBtn from "../buttons/EditBlogBtn"
+import DeleteBlogBtn from "../buttons/DeleteBlogBtn"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { getFallback } from "@/lib/utils"
+import Link from "next/link"
 
 const getAvatar = async (id: string) => {
   try {
-    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/avatar/${id}`);
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/avatar/${id}`)
     if (res.ok) {
-      const avatar = await res.json();
-      return avatar;
+      const avatar = await res.json()
+      return avatar
     }
-    return null;
+    return null
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
 interface PostCardProps {
-  id: string;
-  title: string;
-  content: string;
-  image: string;
-  authorId: string;
+  id: string
+  title: string
+  content: string
+  image: string
+  authorId: string
 }
 
 const PostCard = async ({
@@ -35,21 +35,21 @@ const PostCard = async ({
   image,
   authorId,
 }: PostCardProps) => {
-  const session = await getServerSession(authOptions);
-  const avatar = await getAvatar(authorId);
+  const session = await getServerSession(authOptions)
+  const avatar = await getAvatar(authorId)
   return (
-    <div className="flex flex-col gap-4 shadow-2xl w-[300px] rounded-xl hover:scale-105  duration-500 transition-all h-[465px]">
+    <div className="flex h-[465px] w-[300px] flex-col gap-4 rounded-xl shadow-2xl transition-all duration-500 hover:scale-105">
       <Link href={`/blog/${id}`}>
         <Image
           src={image || "https://placehold.co/300x200?text=Bloggy"}
           alt="image"
           width={300}
           height={200}
-          className="rounded-t-xl h-[200px] object-center "
+          className="h-[200px] rounded-t-xl object-center"
         />
       </Link>
-      <div className="flex px-5 gap-3 items-center">
-        <Avatar className="w-[30px] h-[30px]">
+      <div className="flex items-center gap-3 px-5">
+        <Avatar className="h-[30px] w-[30px]">
           <AvatarImage src={avatar.image ? avatar.image : ""} alt="Avatar" />
           <AvatarFallback className="text-xs">
             {getFallback(avatar.name!)}
@@ -60,9 +60,9 @@ const PostCard = async ({
           <div className="text-xs text-gray-500">{avatar.email}</div>
         </div>
       </div>
-      <div className="flex flex-col gap-1 px-5 mb-4">
-        <div className="flex justify-between items-center">
-          <h2 className="font-bold text-red-700 font-mono flex-1 overflow-hidden">
+      <div className="mb-4 flex flex-col gap-1 px-5">
+        <div className="flex items-center justify-between">
+          <h2 className="flex-1 overflow-hidden font-mono font-bold text-red-700">
             {title}
           </h2>
 
@@ -73,12 +73,12 @@ const PostCard = async ({
             </div>
           )}
         </div>
-        <p className="font-light text-sm text-gray-500 line-clamp-[8]">
+        <p className="line-clamp-[8] text-sm font-light text-gray-500">
           {content}
         </p>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default PostCard;
+export default PostCard

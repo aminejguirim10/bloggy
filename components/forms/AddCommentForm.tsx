@@ -1,19 +1,19 @@
-"use client";
-import React, { useState } from "react";
-import { Textarea } from "../ui/textarea";
+"use client"
+import React, { useState } from "react"
+import { Textarea } from "../ui/textarea"
 
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
-import { useRouter } from "next/navigation";
+} from "@/components/ui/form"
+import { useRouter } from "next/navigation"
 import {
   Select,
   SelectContent,
@@ -22,32 +22,32 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { SmilePlus } from "lucide-react";
+} from "@/components/ui/select"
+import { SmilePlus } from "lucide-react"
 const formSchema = z.object({
   content: z
     .string()
     .min(5, { message: "Message content must be at least 5 characters" }),
-});
+})
 
 const AddCommentForm = ({
   blogId,
   userId,
 }: {
-  blogId: string;
-  userId: string;
+  blogId: string
+  userId: string
 }) => {
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       content: "",
     },
-  });
+  })
   function onSubmit(values: z.infer<typeof formSchema>) {
     const handleSubmit = async () => {
-      setLoading(true);
+      setLoading(true)
       try {
         const res = await fetch(`/api/user/${userId}/blog/${blogId}/comment`, {
           method: "POST",
@@ -55,23 +55,23 @@ const AddCommentForm = ({
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ content: values.content }),
-        });
+        })
         if (res.ok) {
-          router.refresh();
+          router.refresh()
         }
       } catch (error) {
-        console.log(error);
+        console.log(error)
       } finally {
-        setLoading(false);
-        form.reset();
+        setLoading(false)
+        form.reset()
       }
-    };
-    handleSubmit();
+    }
+    handleSubmit()
   }
 
   return (
     <div className="mt-10 flex flex-col gap-2">
-      <div className="text-sky-800 font-semibold">
+      <div className="font-semibold text-sky-800">
         You can leave a comment for this blog
       </div>
       <Form {...form}>
@@ -82,7 +82,7 @@ const AddCommentForm = ({
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <div className="flex relative">
+                  <div className="relative flex">
                     {" "}
                     <Textarea
                       placeholder="Type your comment here."
@@ -91,12 +91,12 @@ const AddCommentForm = ({
                     />
                     <Select
                       onValueChange={(value) => {
-                        field.onChange(field.value + value);
+                        field.onChange(field.value + value)
                       }}
                     >
-                      <SelectTrigger className="w-[25px] h-[25px] rounded-full absolute bottom-2 right-2 flex items-center justify-center">
+                      <SelectTrigger className="absolute bottom-2 right-2 flex h-[25px] w-[25px] items-center justify-center rounded-full">
                         <div>
-                          <SmilePlus className="w-[17px] h-[17px] text-yellow-500" />
+                          <SmilePlus className="h-[17px] w-[17px] text-yellow-500" />
                         </div>
                       </SelectTrigger>
                       <SelectContent align="end">
@@ -120,12 +120,12 @@ const AddCommentForm = ({
           <Button
             type="submit"
             disabled={loading}
-            className="flex gap-3 w-full"
+            className="flex w-full gap-3"
           >
             {loading && (
               <svg
                 aria-hidden="true"
-                className="inline w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                className="inline h-6 w-6 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
                 viewBox="0 0 100 101"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -145,7 +145,7 @@ const AddCommentForm = ({
         </form>
       </Form>
     </div>
-  );
-};
+  )
+}
 
-export default AddCommentForm;
+export default AddCommentForm

@@ -5,21 +5,21 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { IoArrowBackOutline } from "react-icons/io5";
-import ForgotPasswordForm from "@/components/forms/ForgotPasswordForm";
-import Link from "next/link";
-import { Metadata } from "next";
+} from "@/components/ui/card"
+import { IoArrowBackOutline } from "react-icons/io5"
+import ForgotPasswordForm from "@/components/forms/ForgotPasswordForm"
+import Link from "next/link"
+import { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Forgot Password",
   description: "Forgot password page for Bloggy.",
-};
+}
 
 const ForgotPasswordPage = async () => {
   return (
-    <div className="flex justify-center items-center flex-col h-full ">
-      <Card className="w-[350px]  md:w-[550px] shadow-lg h-fit">
+    <div className="flex h-full flex-col items-center justify-center">
+      <Card className="h-fit w-[350px] shadow-lg md:w-[550px]">
         <CardHeader className="flex gap-2">
           <CardTitle className="text-center">Forgot Password</CardTitle>
           <CardDescription className="text-center">
@@ -30,10 +30,10 @@ const ForgotPasswordPage = async () => {
         <CardContent>
           <ForgotPasswordForm />
         </CardContent>
-        <CardFooter className="flex justify-center ">
+        <CardFooter className="flex justify-center">
           <Link
             href={"/signin"}
-            className="flex gap-0.5 items-center text-sm hover:underline text-blue-400 hover:opacity-50 "
+            className="flex items-center gap-0.5 text-sm text-blue-400 hover:underline hover:opacity-50"
           >
             <IoArrowBackOutline />
             Go Back
@@ -41,7 +41,7 @@ const ForgotPasswordPage = async () => {
         </CardFooter>
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export default ForgotPasswordPage;
+export default ForgotPasswordPage
